@@ -24,6 +24,8 @@ Thumbs.db
 # Local assistant/tooling metadata
 .agents/
 .codex/
+AGENTS.md
+PROJECT_BRIEF.md
 
 # Temporary drafts
 rascunhos/
