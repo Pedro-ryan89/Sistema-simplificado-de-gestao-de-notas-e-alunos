@@ -20,5 +20,9 @@ def ler_texto_obrigatorio(mensagem):
         if texto == "":
             print("Este campo nao pode ficar vazio.")
             continue
+
+        if texto.isdigit():
+            print("Este campo nao pode conter apenas numeros.")
+            continue
         
         return texto
