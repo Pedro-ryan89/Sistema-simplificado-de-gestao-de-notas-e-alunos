@@ -16,6 +16,7 @@ def ler_nota(mensagem):
 def ler_texto_obrigatorio(mensagem):
     while True:
         texto = input(mensagem).strip()
+        partes = texto.split()
         
         if texto == "":
             print("Este campo nao pode ficar vazio.")
@@ -23,6 +24,14 @@ def ler_texto_obrigatorio(mensagem):
 
         if texto.isdigit():
             print("Este campo nao pode conter apenas numeros.")
+            continue
+        
+        if not texto.replace(" ","").isalpha(): 
+            print("Este campo nao pode conter numeros,letras e caracteres especiais.")
+            continue
+        
+        if len(partes) < 2:
+            print("Digite nome e sobrenome")
             continue
         
         return texto
