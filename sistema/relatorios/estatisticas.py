@@ -2,10 +2,13 @@
 # ESTATISTICAS DA TURMA
 # =========================
 
+from sistema.gestao.auxiliares import possui_alunos
+from sistema.tipos import Aluno
 
-def mostrar_estatisticas(alunos):
-    if not alunos:
-        print("Lista vazia. Cadastre um aluno primeiro.")
+
+def mostrar_estatisticas(alunos: list[Aluno]) -> None:
+    """Calcula e exibe os principais indicadores da turma."""
+    if not possui_alunos(alunos):
         return
     
     total = len(alunos)

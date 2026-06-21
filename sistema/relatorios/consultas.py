@@ -2,10 +2,13 @@
 # BUSCAS E FILTROS
 # =========================
 
+from sistema.gestao.auxiliares import possui_alunos
+from sistema.tipos import Aluno
 from sistema.validacoes import ler_nota
 
 
-def mostrar_tabela_alunos(alunos, titulo):
+def mostrar_tabela_alunos(alunos: list[Aluno], titulo: str) -> None:
+    """Exibe nome e media dos alunos em formato de tabela."""
     print(f"\n--- {titulo} ---")
     print("+----------------------+-------+")
     print("| Nome                 | Media |")
@@ -15,13 +18,12 @@ def mostrar_tabela_alunos(alunos, titulo):
     print("+----------------------+-------+")
 
 
-def filtrar_aprovados(alunos):
-    if not alunos:
-        print("Lista vazia. Cadastre um aluno primeiro.")
+def filtrar_aprovados(alunos: list[Aluno]) -> None:
+    """Mostra os alunos com media maior ou igual a sete."""
+    if not possui_alunos(alunos):
         return
     
     aprovados = []
-    
     
     for alunos_aprovados in alunos:
         if alunos_aprovados["media"] >= 7:
@@ -34,9 +36,9 @@ def filtrar_aprovados(alunos):
     mostrar_tabela_alunos(aprovados, "ALUNOS APROVADOS")
             
             
-def filtrar_reprovados(alunos):
-    if not alunos:
-        print("Lista vazia. Cadastre um aluno primeiro.")
+def filtrar_reprovados(alunos: list[Aluno]) -> None:
+    """Mostra os alunos com media abaixo de sete."""
+    if not possui_alunos(alunos):
         return
     
     reprovados = []
@@ -53,9 +55,9 @@ def filtrar_reprovados(alunos):
     mostrar_tabela_alunos(reprovados, "ALUNOS REPROVADOS")
 
 
-def filtrar_por_intervalo(alunos):
-    if not alunos:
-        print("Lista vazia. Cadastre um aluno primeiro.")
+def filtrar_por_intervalo(alunos: list[Aluno]) -> None:
+    """Mostra os alunos dentro de um intervalo de medias escolhido."""
+    if not possui_alunos(alunos):
         return
     
     media_minima = ler_nota("Digite a media minima: ")
@@ -78,11 +80,12 @@ def filtrar_por_intervalo(alunos):
     
     mostrar_tabela_alunos(alunos_filtrados, "ALUNOS NO INTERVALO")
         
-def ordenar_por_media(alunos):
-    if not alunos:
-        print("Lista vazia. Cadastre um aluno primeiro.")
+def ordenar_por_media(alunos: list[Aluno]) -> None:
+    """Mostra os alunos da maior para a menor media."""
+    if not possui_alunos(alunos):
         return
-
+    
+    # A media de cada aluno e o criterio usado para ordenar a lista.
     alunos_ordenados = sorted(alunos, key=lambda aluno: aluno["media"], reverse=True)
     
     mostrar_tabela_alunos(alunos_ordenados, "ALUNOS ORDENADOS POR MEDIA")

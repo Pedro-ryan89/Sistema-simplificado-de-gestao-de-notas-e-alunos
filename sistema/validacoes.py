@@ -1,4 +1,8 @@
-def ler_nota(mensagem):
+"""Funcoes de validacao das entradas do usuario."""
+
+
+def ler_nota(mensagem: str) -> float:
+    """Solicita uma nota valida entre 0 e 10."""
     while True:
         entrada = input(mensagem)
         try:
@@ -13,11 +17,12 @@ def ler_nota(mensagem):
 
         return nota
 
-def ler_texto_obrigatorio(mensagem):
+def ler_texto_obrigatorio(mensagem: str) -> str:
+    """Solicita um nome completo formado apenas por letras e espacos."""
     while True:
         texto = input(mensagem).strip()
         partes = texto.split()
-        
+
         if texto == "":
             print("Este campo nao pode ficar vazio.")
             continue
@@ -25,13 +30,30 @@ def ler_texto_obrigatorio(mensagem):
         if texto.isdigit():
             print("Este campo nao pode conter apenas numeros.")
             continue
-        
-        if not texto.replace(" ","").isalpha(): 
-            print("Este campo nao pode conter numeros,letras e caracteres especiais.")
+
+        if not texto.replace(" ", "").isalpha():
+            print("Este campo deve conter apenas letras e espaços.")
             continue
         
         if len(partes) < 2:
             print("Digite nome e sobrenome")
             continue
+
         
+        return texto
+
+def ler_termo_busca(mensagem: str) -> str:
+    """Solicita um termo valido para buscar alunos por nome."""
+
+    while True:
+        texto = input(mensagem).strip()
+
+        if not texto:
+            print("Este campo nao pode ficar vazio.")
+            continue
+
+        if not texto.replace(" ", "").isalpha():
+            print("Digite apenas letras e espacos.")
+            continue
+
         return texto
