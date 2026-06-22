@@ -55,6 +55,7 @@ python3 main.py
 - Limitar cadastro a 20 alunos.
 - Listar alunos em formato tabular.
 - Buscar aluno por nome ou parte do nome.
+- Cancelar uma busca ou seleção de aluno digitando `0`.
 - Editar nome, N1 ou N2 com recálculo da média.
 - Excluir aluno com confirmação.
 - Filtrar aprovados e reprovados.
@@ -88,6 +89,7 @@ Exemplo:
 - As notas devem estar entre `0` e `10`.
 - O cadastro exige nome e sobrenome, usando apenas letras e espaços.
 - A busca aceita nome completo ou parte do nome.
+- Durante uma busca ou seleção de aluno, digite `0` para cancelar e voltar ao menu.
 
 ## Observacoes
 

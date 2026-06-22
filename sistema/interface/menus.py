@@ -2,14 +2,16 @@
 # MENUS DO SISTEMA
 # =========================
 
-from sistema.gestao.alunos import cadastrar_aluno, listar_alunos, buscar_aluno, editar_aluno, excluir_aluno
+from sistema.gestao.alunos import (buscar_aluno,cadastrar_aluno,editar_aluno,excluir_aluno,listar_alunos,)
+from sistema.interface.tela import limpar_tela, pausar
 from sistema.persistencia.armazenamento import salvar_dados
-from sistema.relatorios.consultas import filtrar_aprovados, filtrar_reprovados, filtrar_por_intervalo, ordenar_por_media
+from sistema.relatorios.consultas import (filtrar_aprovados,filtrar_por_intervalo,filtrar_reprovados,ordenar_por_media,)
 from sistema.relatorios.estatisticas import mostrar_estatisticas
 from sistema.tipos import Aluno
 
 
 def mostrar_menu_principal() -> None:
+    limpar_tela()
     print()
     print("===========================================")
     print("sistema de gerenciamento de notas e alunos")
@@ -20,6 +22,7 @@ def mostrar_menu_principal() -> None:
     print("3. Salvar e sair")
 
 def mostrar_menu_gestao_alunos() -> None:
+    limpar_tela()
     print()
     print(" ----------- GESTAO DE ALUNOS -----------")
     print("1. Cadastrar Aluno")
@@ -31,6 +34,7 @@ def mostrar_menu_gestao_alunos() -> None:
 
 
 def mostrar_menu_filtro_estatisticas() -> None:
+    limpar_tela()
     print()
     print(" ----------- FILTROS E ESTATISTICAS -----------")
     print("1. Filtrar aprovados")
@@ -58,7 +62,9 @@ def menu_principal(alunos: list[Aluno]) -> None:
                 break
             case _:
                 print("Opcao invalida, insira somente as opcoes disponiveis")
-                
+                pausar()
+
+
 def menu_gestao_alunos(alunos: list[Aluno]) -> None:
     while True:
         
@@ -69,19 +75,26 @@ def menu_gestao_alunos(alunos: list[Aluno]) -> None:
         match opcao:
             case "1":
                 cadastrar_aluno(alunos)
+                pausar()
             case "2":
                 listar_alunos(alunos)
+                pausar()
             case "3":
                 buscar_aluno(alunos)
+                pausar()
             case "4":
                 editar_aluno(alunos)
+                pausar()
             case "5":
                 excluir_aluno(alunos)
+                pausar()
             case "6":
                 break
             case _:
                 print("Opcao invalida, insira somente as opcoes disponiveis")
-        
+                pausar()
+
+
 def menu_filtro_estatisticas(alunos: list[Aluno]) -> None:
     while True:
         
@@ -92,15 +105,21 @@ def menu_filtro_estatisticas(alunos: list[Aluno]) -> None:
         match opcao:
             case "1":
                 filtrar_aprovados(alunos)
+                pausar()
             case "2":
                 filtrar_reprovados(alunos)
+                pausar()
             case "3":
                 filtrar_por_intervalo(alunos)
+                pausar()
             case "4":
                 ordenar_por_media(alunos)
+                pausar()
             case "5":
                 mostrar_estatisticas(alunos)
+                pausar()
             case "6":
                 break
             case _:
                 print("Opcao invalida, insira somente as opcoes disponiveis")
+                pausar()

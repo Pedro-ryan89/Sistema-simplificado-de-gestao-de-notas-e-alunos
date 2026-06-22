@@ -2,8 +2,9 @@
 # FUNCOES AUXILIARES
 # =========================
 
-from sistema.validacoes import ler_termo_busca
+from sistema.interface.tela import limpar_tela
 from sistema.tipos import Aluno
+from sistema.validacoes import ler_termo_busca
 
 
 def possui_alunos(alunos: list[Aluno]) -> bool:
@@ -23,44 +24,51 @@ def encontrar_alunos_por_nome(alunos: list[Aluno], termo: str) -> list[Aluno]:
     ]
 
 
-def selecionar_aluno(
-    alunos: list[Aluno], mensagem_busca: str
-) -> Aluno | None:
+def selecionar_aluno(alunos: list[Aluno], mensagem_busca: str) -> Aluno | None:
     """Busca alunos e devolve o aluno selecionado pelo usuario."""
     if not possui_alunos(alunos):
         return None
 
-    termo = ler_termo_busca(mensagem_busca)
-    alunos_encontrados = encontrar_alunos_por_nome(alunos, termo)
-
-    if not alunos_encontrados:
-        print("Nenhum aluno encontrado.")
-        return None
-
-    if len(alunos_encontrados) == 1:
-        return alunos_encontrados[0]
-
-    print("\n--- ALUNOS ENCONTRADOS ---")
-    for i, aluno in enumerate(alunos_encontrados, start=1):
-        print(f"{i}. {aluno['nome']}")
-
-    # Repete apenas a escolha numerica, sem obrigar uma nova busca.
+    erro_busca: str | None = None
     while True:
-        escolha = input("Escolha o aluno pelo numero: ")
+        termo = ler_termo_busca(mensagem_busca, erro_busca)
+        if termo is None:
+            return None
 
-        if not escolha.isdigit():
-            print("\n")
-            print("===================================")
-            print("         Opcao invalida            ")
-            print("===================================")
+        alunos_encontrados = encontrar_alunos_por_nome(alunos, termo)
+        if not alunos_encontrados:
+            erro_busca = "Nenhum aluno encontrado. Tente novamente ou digite 0 para cancelar."
             continue
 
-        indice = int(escolha) - 1
-        if indice < 0 or indice >= len(alunos_encontrados):
-            print("Opcao invalida.")
-            continue
+        if len(alunos_encontrados) == 1:
+            return alunos_encontrados[0]
 
-        return alunos_encontrados[indice]
+        erro_escolha: str | None = None
+        # Repete apenas a escolha numerica, sem obrigar uma nova busca.
+        while True:
+            limpar_tela()
+            print("\n--- ALUNOS ENCONTRADOS ---")
+            for i, aluno in enumerate(alunos_encontrados, start=1):
+                print(f"{i}. {aluno['nome']}")
+            print("0. Cancelar")
+            if erro_escolha:
+                print(f"\n{erro_escolha}")
+
+            escolha = input("Escolha o aluno pelo numero: ")
+
+            if escolha == "0":
+                return None
+
+            if not escolha.isdigit():
+                erro_escolha = "Opcao invalida."
+                continue
+
+            indice = int(escolha) - 1
+            if indice < 0 or indice >= len(alunos_encontrados):
+                erro_escolha = "Opcao invalida."
+                continue
+
+            return alunos_encontrados[indice]
 
 
 def mostrar_dados_aluno(aluno: Aluno) -> None:

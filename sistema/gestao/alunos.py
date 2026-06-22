@@ -3,6 +3,7 @@
 # =========================
 
 from sistema.gestao.auxiliares import mostrar_dados_aluno, possui_alunos, selecionar_aluno
+from sistema.interface.tela import limpar_tela
 from sistema.tipos import Aluno
 from sistema.validacoes import ler_nota, ler_texto_obrigatorio
 
@@ -65,12 +66,16 @@ def editar_aluno(alunos: list[Aluno]) -> None:
     if not aluno_escolhido:
         return
 
+    mensagem: str | None = None
     while True:
+        limpar_tela()
         print("\n--- EDITAR ALUNO ---")
         print("1. Editar nome")
         print("2. Editar N1")
         print("3. Editar N2")
         print("4. Cancelar")
+        if mensagem:
+            print(f"\n{mensagem}")
 
         opcao = input("Escolha o que deseja editar: ")
 
@@ -78,25 +83,22 @@ def editar_aluno(alunos: list[Aluno]) -> None:
             case "1":
                 novo_nome = ler_texto_obrigatorio("Novo nome: ")
                 aluno_escolhido["nome"] = novo_nome
-                print("\nNome atualizado com sucesso.")
+                mensagem = "Nome atualizado com sucesso."
             case "2":
                 nova_n1 = ler_nota("Nova N1: ")
                 aluno_escolhido["n1"] = nova_n1
                 aluno_escolhido["media"] = calcular_media(aluno_escolhido["n1"], aluno_escolhido["n2"])
-                print("\nN1 atualizada com sucesso.")
+                mensagem = "N1 atualizada com sucesso."
             case "3":
                 nova_n2 = ler_nota("Nova N2: ")
                 aluno_escolhido["n2"] = nova_n2
                 aluno_escolhido["media"] = calcular_media(aluno_escolhido["n1"], aluno_escolhido["n2"])
-                print("\nN2 atualizada com sucesso.")
+                mensagem = "N2 atualizada com sucesso."
             case "4":
-                print("Edicao cancelada.")
+                print("\nEdicao cancelada.")
                 break
             case _:
-                print("\n")
-                print("===================================")
-                print("         Opcao invalida            ")
-                print("===================================")
+                mensagem = "Opcao invalida."
                 continue
 
 
@@ -111,9 +113,16 @@ def excluir_aluno(alunos: list[Aluno]) -> None:
         )
 
         if not aluno_escolhido:
-            continue
+            return
 
+        erro_confirmacao: str | None = None
         while True:
+            limpar_tela()
+            print("\n--- EXCLUIR ALUNO ---")
+            print(f"Aluno: {aluno_escolhido['nome']}")
+            if erro_confirmacao:
+                print(f"\n{erro_confirmacao}")
+
             confirmacao = input(
                 f"Tem certeza que deseja excluir {aluno_escolhido['nome']}? (s/n): "
             )
@@ -126,4 +135,4 @@ def excluir_aluno(alunos: list[Aluno]) -> None:
                 print("\nExclusao cancelada.")
                 return
 
-            print("\nOpcao invalida. Digite s ou n.")
+            erro_confirmacao = "Opcao invalida. Digite s ou n."
